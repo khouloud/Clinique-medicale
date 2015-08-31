@@ -9,7 +9,7 @@ $agenda = get_agenda($emp_id);
 <html>
 	<head>
         <meta charset = "UTF-8" />
-        <title>Agenda Cabinet Médical</title>
+        <title>Agenda Cabinet Médical blah</title>
 	</head>
 <body>
     <?php require_once('view_bloc/_view_header.php') ?>
