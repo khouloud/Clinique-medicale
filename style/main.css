@@ -1,6 +1,7 @@
 /* Feuille de style principale du site Agenda */
 header {
     background-color: aqua;
+    border-bottom: 2px solid palevioletred;
 
 }
 
