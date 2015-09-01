@@ -16,8 +16,13 @@ $agenda = get_agenda($emp_id);
     <h2>Activité de l'employé <?php echo $emp_data['emp_name'] ?> </h2>
 	<div id="agenda">
 		<table>
-			<tr><th>Heure</th><th>Activité</th></tr>	
+			<tr><th>Heure</th><th>Activité</th></tr>
+
 <?php
+
+foreach (get_agenda(102) as $key => $value){
+	echo '<tr><th>',$key,'</th><th>',$value,'</th></tr>';
+}
 // TODO: Afficher l'agenda de l'employé
 ?>
 		</table>
