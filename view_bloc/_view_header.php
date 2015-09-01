@@ -15,7 +15,7 @@ foreach($liste_employes as $emp_id => $emp_data){
 };
 
 
-        var_dump($emp_data['emp_name']);
+        
 
         // TODO: Afficher le menu-liste des employés
         ?>
