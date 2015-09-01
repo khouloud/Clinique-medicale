@@ -20,10 +20,13 @@ $agenda = get_agenda($emp_id);
 
 <?php
 
-foreach (get_agenda(102) as $key => $value){
+foreach (get_agenda($_GET[PARAM_EMP_ID]) as $key => $value){
 	echo '<tr><th>',$key,'</th><th>',$value,'</th></tr>';
 }
 // TODO: Afficher l'agenda de l'employé
+if (array_key_exists(PARAM_EMP_ID,$_GET)) {
+	echo $_GET[PARAM_EMP_ID];
+}
 ?>
 		</table>
 	</div>
