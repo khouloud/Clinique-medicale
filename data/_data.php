@@ -1,4 +1,6 @@
 <?php
+require_once 'data/_fileDB.php';
+
 define('PARAM_EMP_ID',      'emp_id'); //
 define('PARAM_EMP_NAME',    'emp_name'); //
 define('PARAM_EMP_TYPE',    'emp_type'); //
@@ -23,7 +25,7 @@ define('ACT_HORS', 'Hors');                         // Hors clinique
 function get_employes()
 {
     return array(
-        '102' => array('emp_name'=>'Bernard',  'emp_type' => EMPL_TYPE_INFIRMIER),
+        '102' => array('emp_name'=>'Bernard',   'emp_type' => EMPL_TYPE_INFIRMIER),
         '136' => array('emp_name'=>'Tremblay',  'emp_type' => EMPL_TYPE_MEDECIN),
         '025' => array('emp_name'=>'Zintohl',   'emp_type' => EMPL_TYPE_MEDECIN),
         '082' => array('emp_name'=>'Müller',    'emp_type' => EMPL_TYPE_MEDECIN),
@@ -46,73 +48,74 @@ function get_activites() {
 	);
 }
 
+
+$fixture = array(
+    '102' => array(
+        '08' => ACT_CONSULT_MDC,
+        '09' => ACT_CONSULT_MDC,
+        '10' => ACT_DOSSIERS_MDC,
+        '11' => ACT_DOSSIERS_MDC,
+        '12' => ACT_HORS,
+        '13' => ACT_FORM_CONSEIL,
+        '14' => ACT_PANNING,
+        '15' => ACT_PANNING,
+    ),
+    '136' => array(
+        '08' => ACT_DOSSIERS_MDC,
+        '09' => ACT_CONSULT_MDC,
+        '10' => ACT_CONSULT_MDC,
+        '11' => ACT_CONSULT_MDC,
+        '12' => ACT_HORS,
+        '13' => ACT_FORM_CONSEIL,
+        '14' => ACT_CONSULT_MDC,
+        '15' => ACT_PANNING,
+    ),
+    '025' => array(
+        '08' => ACT_DOSSIERS_MDC,
+        '09' => ACT_PANNING,
+        '10' => ACT_CONSULT_MDC,
+        '11' => ACT_CONSULT_MDC,
+        '12' => ACT_HORS,
+        '13' => ACT_FORM_CONSEIL,
+        '14' => ACT_CONSULT_MDC,
+        '15' => ACT_CONSULT_MDC,
+    ),
+    '082' => array(
+        '08' => ACT_DOSSIERS_MDC,
+        '09' => ACT_CONSULT_MDC,
+        '10' => ACT_CONSULT_MDC,
+        '11' => ACT_CONSULT_MDC,
+        '12' => ACT_HORS,
+        '13' => ACT_FORM_CONSEIL,
+        '14' => ACT_CONSULT_MDC,
+        '15' => ACT_PANNING,
+    ),
+    '045' => array(
+        '08' => ACT_PANNING,
+        '09' => ACT_PANNING,
+        '10' => ACT_HORS,
+        '11' => ACT_HORS,
+        '12' => ACT_HORS,
+        '13' => ACT_FORM_CONSEIL,
+        '14' => ACT_DOSSIERS_MDC,
+        '15' => ACT_DOSSIERS_MDC,
+    ),
+);
+
+
 /*
- * Retourne un agenda d'une matinée
+ * Retourne un agenda d'un employé
  */
-function get_agenda($id) {
-    switch ($id) {
-        case '102':
-            $result = array(
-                '8' => ACT_CONSULT_MDC,
-                '9' => ACT_CONSULT_MDC,
-                '10' => ACT_DOSSIERS_MDC,
-                '11' => ACT_DOSSIERS_MDC,
-                '12' => ACT_HORS,
-                '13' => ACT_FORM_CONSEIL,
-                '14' => ACT_PANNING,
-                '15' => ACT_PANNING,
-            );
-            break;
-        case '136':
-            $result = array(
-                '8' => ACT_DOSSIERS_MDC,
-                '9' => ACT_CONSULT_MDC,
-                '10' => ACT_CONSULT_MDC,
-                '11' => ACT_CONSULT_MDC,
-                '12' => ACT_HORS,
-                '13' => ACT_FORM_CONSEIL,
-                '14' => ACT_CONSULT_MDC,
-                '15' => ACT_PANNING,
-            );
-            break;
-        case '025':
-            $result = array(
-                '8' => ACT_DOSSIERS_MDC,
-                '9' => ACT_PANNING,
-                '10' => ACT_CONSULT_MDC,
-                '11' => ACT_CONSULT_MDC,
-                '12' => ACT_HORS,
-                '13' => ACT_FORM_CONSEIL,
-                '14' => ACT_CONSULT_MDC,
-                '15' => ACT_CONSULT_MDC,
-            );
-            break;
-        case '082':
-            $result = array(
-                '8' => ACT_DOSSIERS_MDC,
-                '9' => ACT_CONSULT_MDC,
-                '10' => ACT_CONSULT_MDC,
-                '11' => ACT_CONSULT_MDC,
-                '12' => ACT_HORS,
-                '13' => ACT_FORM_CONSEIL,
-                '14' => ACT_CONSULT_MDC,
-                '15' => ACT_PANNING,
-            );
-            break;
-        case '045':
-            $result = array(
-                '8' => ACT_PANNING,
-                '9' => ACT_PANNING,
-                '10' => ACT_HORS,
-                '11' => ACT_HORS,
-                '12' => ACT_HORS,
-                '13' => ACT_FORM_CONSEIL,
-                '14' => ACT_DOSSIERS_MDC,
-                '15' => ACT_DOSSIERS_MDC,
-            );
-            break;
-    }
-	return $result;
+function get_agenda($emp_id) {
+    $agendas = read_agendas();
+    return $agendas[$emp_id];
 }
 
-?>
+/*
+ * Écrit un agenda d'un employé
+ */
+function set_agenda($emp_id, $agenda) {
+    $agendas = read_agendas();
+    $agendas[$emp_id] = $agenda;
+    write_agendas($agendas);
+}
