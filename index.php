@@ -14,6 +14,7 @@ $agenda = get_agenda($emp_id);
 <html>
 <head>
 	<meta charset = "UTF-8" />
+	
 	<title>Agenda Cabinet Médical blah</title>
 </head>
 <body>
